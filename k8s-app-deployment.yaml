@@ -1,0 +1,44 @@
+# https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name:  flaskapp-deployment  
+  namespace: default
+  labels:
+    app:  flaskapp
+spec:
+  selector:
+    matchLabels:
+      app: flaskapp
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app:  flaskapp
+    spec:
+      containers:
+      - name:  flaskapp
+        image:  rsxyz123/flaskapp:latest
+        ports:
+        - containerPort:  8080
+          name:  flaskapp
+
+---
+# https://kubernetes.io/docs/concepts/services-networking/service/
+apiVersion: v1
+kind: Service
+metadata:
+  name: flaskapp-service 
+  namespace: default
+spec:
+  selector:
+    app: flaskapp
+  type: LoadBalancer 
+  ports:
+  - name: flaskapp
+    protocol: TCP
+    port: 80
+    targetPort: 8080
+
+
+---

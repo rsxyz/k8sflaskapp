@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
+        {% if title %}
+            <title> {{title}}</title>
+        {% else %}
+            <title> Convert Temperature  </title>
+        {% endif %}
+  
+</head>
+<body>
+    <h1>Celsius to Fahrenheit</h1>
+    <form action="" method="get">
+        <h2>
+        Celsius temperature: <input type="text" name="celsius"> 
+        <input type="submit" value="Convert to Fahrenheit">
+       </h2>
+    </form>
+    <h2>Fahrenheit: {{ fahrenheit }}</h2> 
+</body>
+</html>
