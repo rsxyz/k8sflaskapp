@@ -1,0 +1,27 @@
+# https://kubernetes.io/docs/concepts/services-networking/service/
+apiVersion: v1
+kind: Service
+metadata:
+  name: flaskapp-service 
+  namespace: default
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-type: nlb
+    service.beta.kubernetes.io/aws-load-balancer-ssl-negotiation-policy: ELBSecurityPolicy-TLS-1-1-2017-01
+    #service.beta.kubernetes.io/aws-load-balancer-ssl-cert: arn:aws:acm:{region}:{user id}:certificate/{id}
+    #Backend talks over http
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http  
+    #Only run SSL on the port named "flaskapp-443" below.
+    service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "flaskapp-443"
+spec:
+  selector:
+    app: flaskapp
+  type: LoadBalancer # default clb
+  ports:
+  - name: flaskapp-80
+    protocol: TCP
+    port: 80
+    targetPort: 8080
+  - name: flaskapp-443
+    protocol: TCP
+    port: 443
+    targetPort: 8080
